@@ -1,16 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://quky2wkdc58c"]
+[gd_scene load_steps=8 format=3 uid="uid://quky2wkdc58c"]
 
-[ext_resource type="Shader" uid="uid://ide4373nndng" path="res://shaders/background.tres" id="1_4u5kx"]
+[ext_resource type="Script" path="res://CentralCircle.gd" id="1_jq000"]
+[ext_resource type="Script" path="res://TetherLine.gd" id="2_lf0m1"]
+
+[sub_resource type="VisualShader" id="VisualShader_fj504"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kv8un"]
 render_priority = 0
-shader = ExtResource("1_4u5kx")
+shader = SubResource("VisualShader_fj504")
 
 [sub_resource type="Gradient" id="Gradient_pg2xn"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_j8yv7"]
 gradient = SubResource("Gradient_pg2xn")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nir6v"]
 
 [node name="Main" type="Node2D"]
 
@@ -37,3 +48,15 @@ offset_top = 460.0
 offset_right = 49.0
 offset_bottom = 492.0
 text = "Regenerate"
+
+[node name="TetherLine" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+script = ExtResource("2_lf0m1")
+
+[node name="CentralCircle" type="RigidBody2D" parent="TetherLine"]
+z_index = 1
+input_pickable = true
+script = ExtResource("1_jq000")
+
+[node name="Hitbox" type="CollisionShape2D" parent="TetherLine/CentralCircle"]
+shape = SubResource("CircleShape2D_nir6v")
