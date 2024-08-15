@@ -1,7 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://quky2wkdc58c"]
+[gd_scene load_steps=10 format=3 uid="uid://quky2wkdc58c"]
 
 [ext_resource type="Script" path="res://CentralCircle.gd" id="1_jq000"]
+[ext_resource type="Script" path="res://main.gd" id="1_pngqx"]
 [ext_resource type="Script" path="res://TetherLine.gd" id="2_lf0m1"]
+
+[sub_resource type="Environment" id="Environment_071kt"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.05
+glow_blend_mode = 0
 
 [sub_resource type="VisualShader" id="VisualShader_fj504"]
 code = "shader_type spatial;
@@ -24,6 +31,10 @@ gradient = SubResource("Gradient_pg2xn")
 [sub_resource type="CircleShape2D" id="CircleShape2D_nir6v"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_pngqx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_071kt")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 
@@ -42,20 +53,20 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_j8yv7")
 
-[node name="ResetButton" type="Button" parent="."]
-offset_left = -49.0
-offset_top = 460.0
-offset_right = 49.0
-offset_bottom = 492.0
-text = "Regenerate"
-
 [node name="TetherLine" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0, 0, 0)
+joint_mode = 2
+begin_cap_mode = 2
+antialiased = true
 script = ExtResource("2_lf0m1")
 
 [node name="CentralCircle" type="RigidBody2D" parent="TetherLine"]
 z_index = 1
 input_pickable = true
+mass = 1000.0
+lock_rotation = true
+linear_damp_mode = 1
+linear_damp = 0.5
 script = ExtResource("1_jq000")
 
 [node name="Hitbox" type="CollisionShape2D" parent="TetherLine/CentralCircle"]

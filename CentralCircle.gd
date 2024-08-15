@@ -12,12 +12,18 @@ func _draw():
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion and held:
+		PhysicsServer2D.body_set_state(
+			get_rid(),
+			PhysicsServer2D.BODY_STATE_TRANSFORM,
+			transform.translated(event.relative)
+		)
 		translate(event.relative)
+		linear_velocity = Vector2.ZERO
 	if event is InputEventMouseButton and not event.pressed:
 		held = false
 
 
-func _input_event(viewport, event, shape_idx):
+func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		held = true
 
@@ -28,6 +34,6 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if not held:
-		apply_central_force(-position)
+		apply_central_force(-1000 * position)
