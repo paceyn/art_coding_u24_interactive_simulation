@@ -36,4 +36,4 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if not held:
-		apply_central_force(-1000 * position)
+		apply_central_force(-mass * position)

@@ -4,13 +4,14 @@ var visual
 var outline
 var hitbox
 
+var initial_x = null
 var initial_y = null
 var package = null
 
 func _integrate_forces(state):
 	if package != null:
-		state.transform = Transform2D(package[1], Vector2(-1000, package[0]))
-		state.linear_velocity = package[2]
+		state.transform = Transform2D(package[1], Vector2(1100 * initial_x, package[0]))
+		state.linear_velocity = Vector2(-initial_x * package[2].x, package[2].y)
 		state.angular_velocity = package[3]
 	package = null
 
@@ -39,11 +40,11 @@ func _ready():
 	outline.points = points_packed.duplicate()
 	hitbox.polygon = points_packed.duplicate()
 	
-	position = Vector2(-1000, initial_y)
+	position = Vector2(1100 * initial_x, initial_y)
 	
 
 func _process(delta):
-	get_parent().opacity -= 0.02 * delta
+	get_parent().opacity -= 0.03 * delta
 	
 	visual.color = Color(0, 0, 0, get_parent().opacity)
 	outline.default_color = Color(1, 1, 1, get_parent().opacity)

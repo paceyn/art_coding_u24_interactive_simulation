@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://quky2wkdc58c"]
+[gd_scene load_steps=11 format=3 uid="uid://quky2wkdc58c"]
 
 [ext_resource type="Script" path="res://CentralCircle.gd" id="1_jq000"]
 [ext_resource type="Script" path="res://main.gd" id="1_pngqx"]
@@ -27,6 +27,9 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_j8yv7"]
 gradient = SubResource("Gradient_pg2xn")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kl5pr"]
+friction = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nir6v"]
 
@@ -63,10 +66,11 @@ script = ExtResource("2_lf0m1")
 [node name="CentralCircle" type="RigidBody2D" parent="TetherLine"]
 z_index = 1
 input_pickable = true
-mass = 1000.0
+mass = 3.0
+physics_material_override = SubResource("PhysicsMaterial_kl5pr")
 lock_rotation = true
 linear_damp_mode = 1
-linear_damp = 0.5
+linear_damp = 0.2
 script = ExtResource("1_jq000")
 
 [node name="Hitbox" type="CollisionShape2D" parent="TetherLine/CentralCircle"]
